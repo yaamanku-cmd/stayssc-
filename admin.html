@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Demo Dashboard — STAYSCAPE</title>
+  <meta name="description" content="Simulated administrative control panel for STAYSCAPE hotel booking system with live metrics and local inventory CRUD.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Admin Dashboard Specific Styles */
+    .admin-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: var(--space-lg);
+      margin-bottom: var(--space-2xl);
+    }
+
+    .admin-stat-card {
+      background-color: var(--white);
+      border: 1px solid var(--sand);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .admin-stat-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-sm);
+      background-color: var(--sand-light);
+      color: var(--copper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .admin-stat-val {
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.1;
+    }
+
+    .admin-stat-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--charcoal);
+      margin-top: 2px;
+    }
+
+    /* Admin Table Styles */
+    .admin-card {
+      background-color: var(--white);
+      border: 1px solid var(--sand);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: var(--space-2xl);
+    }
+
+    .admin-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-lg);
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    .admin-table th {
+      background-color: var(--ivory);
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 12px 14px;
+      border-bottom: 2px solid var(--sand);
+    }
+
+    .admin-table td {
+      padding: 14px;
+      border-bottom: 1px solid var(--sand-light);
+      color: var(--charcoal-dark);
+      vertical-align: middle;
+    }
+
+    .admin-table tr:hover td {
+      background-color: var(--ivory);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dynamic Header Container -->
+  <div id="site-header-container"></div>
+
+  <main class="main-content container" id="main-content" style="padding-top: var(--space-2xl);">
+    
+    <!-- Admin Disclaimer Notice -->
+    <div class="demo-alert-box warning" style="border-radius: var(--radius-md); margin-bottom: var(--space-xl);">
+      <i data-lucide="shield-alert" style="width: 24px; height: 24px; color: var(--warning); flex-shrink: 0;"></i>
+      <div>
+        <strong style="color: var(--navy); font-size: 0.95rem; display: block; margin-bottom: 2px;">
+          Administrative Demonstration — Local Sample Data Only
+        </strong>
+        <span style="font-size: 0.88rem; color: var(--charcoal-dark);">
+          This console simulates hotel property management and reservation auditing for demonstration purposes. No real login credentials, cloud backend, or remote database are used. Changes persist solely in your local browser's storage.
+        </span>
+      </div>
+    </div>
+
+    <!-- Page Header & Actions -->
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-xl); flex-wrap: wrap; gap: var(--space-md);">
+      <div>
+        <h1 style="font-size: clamp(2rem, 3.5vw, 2.8rem); margin-bottom: 4px;">Management Dashboard</h1>
+        <p style="color: var(--charcoal); font-size: 1.05rem;">
+          Audit reservations, inspect simulated revenue metrics, and manage local sample hotel inventory.
+        </p>
+      </div>
+
+      <div style="display: flex; gap: var(--space-sm); align-items: center;">
+        <button type="button" class="btn btn-secondary btn-sm" id="reset-sample-data-btn">
+          <i data-lucide="rotate-ccw" style="width: 14px; height: 14px;"></i>
+          <span>Reset Sample Data</span>
+        </button>
+
+        <button type="button" class="btn btn-primary btn-sm" id="add-hotel-modal-btn">
+          <i data-lucide="plus" style="width: 16px; height: 16px;"></i>
+          <span>Add New Stay</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Metrics Cards Grid -->
+    <section class="admin-metrics-grid" aria-label="System Metrics">
+      
+      <div class="admin-stat-card">
+        <div class="admin-stat-icon-box">
+          <i data-lucide="building" style="width: 24px; height: 24px;"></i>
+        </div>
+        <div>
+          <div class="admin-stat-val" id="metric-total-hotels">0</div>
+          <div class="admin-stat-label">Total Stays</div>
+        </div>
+      </div>
+
+      <div class="admin-stat-card">
+        <div class="admin-stat-icon-box" style="color: var(--navy);">
+          <i data-lucide="calendar" style="width: 24px; height: 24px;"></i>
+        </div>
+        <div>
+          <div class="admin-stat-val" id="metric-total-bookings">0</div>
+          <div class="admin-stat-label">Total Bookings</div>
+        </div>
+      </div>
+
+      <div class="admin-stat-card">
+        <div class="admin-stat-icon-box" style="color: var(--sage);">
+          <i data-lucide="check-circle" style="width: 24px; height: 24px;"></i>
+        </div>
+        <div>
+          <div class="admin-stat-val" id="metric-confirmed-bookings">0</div>
+          <div class="admin-stat-label">Confirmed Stays</div>
+        </div>
+      </div>
+
+      <div class="admin-stat-card">
+        <div class="admin-stat-icon-box" style="color: var(--error);">
+          <i data-lucide="x-circle" style="width: 24px; height: 24px;"></i>
+        </div>
+        <div>
+          <div class="admin-stat-val" id="metric-cancelled-bookings">0</div>
+          <div class="admin-stat-label">Cancelled Stays</div>
+        </div>
+      </div>
+
+      <div class="admin-stat-card">
+        <div class="admin-stat-icon-box" style="color: var(--copper);">
+          <i data-lucide="indian-rupee" style="width: 24px; height: 24px;"></i>
+        </div>
+        <div>
+          <div class="admin-stat-val font-serif" id="metric-demo-revenue" style="font-size: 1.35rem;">₹0</div>
+          <div class="admin-stat-label">Simulated Revenue</div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs-nav" role="tablist">
+      <button type="button" class="tab-btn is-active" id="tab-btn-bookings" role="tab" aria-selected="true">
+        <i data-lucide="receipt" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;"></i>
+        All Demo Bookings
+      </button>
+      <button type="button" class="tab-btn" id="tab-btn-hotels" role="tab" aria-selected="false">
+        <i data-lucide="hotel" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;"></i>
+        Hotel Inventory (Local CRUD)
+      </button>
+    </div>
+
+    <!-- Section 1: Bookings Management -->
+    <section id="admin-bookings-section" class="admin-card" aria-label="Bookings Audit Table">
+      
+      <div class="admin-card-header">
+        <div>
+          <h2 style="font-size: 1.35rem; color: var(--navy); margin-bottom: 2px;">Simulated Bookings Log</h2>
+          <p style="font-size: 0.85rem; color: var(--charcoal);">Search and filter local reservations recorded in this browser.</p>
+        </div>
+
+        <div style="display: flex; gap: var(--space-sm); align-items: center; flex-wrap: wrap;">
+          <input 
+            type="search" 
+            id="admin-booking-search" 
+            class="form-input" 
+            placeholder="Search by Guest, Email, or ID..." 
+            style="width: 260px; padding: 8px 12px; font-size: 0.88rem;"
+          >
+          <select id="admin-booking-status-filter" class="form-select" style="width: auto; padding: 8px 12px; font-size: 0.88rem;">
+            <option value="all">All Statuses</option>
+            <option value="confirmed">Confirmed Only</option>
+            <option value="cancelled">Cancelled Only</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-responsive-wrapper">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Ref ID</th>
+              <th>Guest Details</th>
+              <th>Hotel &amp; City</th>
+              <th>Stay Dates</th>
+              <th>Nights</th>
+              <th>Total Amount</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admin-bookings-tbody">
+            <!-- Populated via admin.js -->
+          </tbody>
+        </table>
+      </div>
+
+    </section>
+
+    <!-- Section 2: Hotel Inventory Management -->
+    <section id="admin-hotels-section" class="admin-card" style="display: none;" aria-label="Hotels Inventory Management">
+      
+      <div class="admin-card-header">
+        <div>
+          <h2 style="font-size: 1.35rem; color: var(--navy); margin-bottom: 2px;">Local Hotel Dataset</h2>
+          <p style="font-size: 0.85rem; color: var(--charcoal);">Add, edit, or delete sample hotel properties saved in <code style="background: var(--sand-light); padding: 1px 4px;">stayscape:hotels</code>.</p>
+        </div>
+        <button type="button" class="btn btn-primary btn-sm" id="add-hotel-btn-2">
+          <i data-lucide="plus" style="width: 15px; height: 15px;"></i>
+          <span>Add Property</span>
+        </button>
+      </div>
+
+      <div class="table-responsive-wrapper">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Property</th>
+              <th>Destination</th>
+              <th>Price / Night</th>
+              <th>Rating</th>
+              <th>Capacity</th>
+              <th>Availability</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admin-hotels-tbody">
+            <!-- Populated via admin.js -->
+          </tbody>
+        </table>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Dynamic Footer Container -->
+  <div id="site-footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/admin.js"></script>
+</body>
+</html>

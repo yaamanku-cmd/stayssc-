@@ -1,0 +1,263 @@
+/* ==========================================================================
+   STAYSCAPE — Responsive Stylesheet & Breakpoint Overrides
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Mobile Navigation Drawer Styles
+   -------------------------------------------------------------------------- */
+.mobile-nav-drawer {
+  position: fixed;
+  top: 76px;
+  left: 0;
+  width: 100%;
+  background-color: var(--white);
+  border-bottom: 1px solid var(--sand);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  z-index: 99;
+  transform: translateY(-120%);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, visibility 0.2s;
+}
+
+.mobile-nav-drawer.is-open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-nav-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.mobile-nav-links a {
+  display: block;
+  padding: 10px 14px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--navy);
+  border-radius: var(--radius-sm);
+  background-color: var(--ivory);
+}
+
+.mobile-nav-links a:hover, .mobile-nav-links a.active {
+  background-color: var(--sand-light);
+  color: var(--copper);
+}
+
+.mobile-nav-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--sand-light);
+}
+
+/* --------------------------------------------------------------------------
+   Large Screens (>= 1440px)
+   -------------------------------------------------------------------------- */
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1360px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Medium Tablets & Small Laptops (1024px and below)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .hero-search-form {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+  }
+
+  .hero-search-form .search-submit-col {
+    grid-column: span 2;
+  }
+
+  .editorial-banner {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: var(--space-2xl) var(--space-xl);
+  }
+
+  .editorial-img-box {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Mobile & Portrait Tablets (768px and below)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .nav-links, .nav-actions .admin-nav-link {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--sand);
+    background-color: var(--white);
+  }
+
+  .hero-search-form {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-search-form .search-submit-col {
+    grid-column: span 1;
+  }
+
+  .btn-search-hero {
+    width: 100%;
+  }
+
+  /* Two-column page layouts stack into single columns */
+  .details-layout, .checkout-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .details-booking-card-wrapper {
+    position: static !important;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: var(--space-sm);
+    text-align: center;
+  }
+
+  /* Table responsive wrapper */
+  .table-responsive-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--sand);
+    border-radius: var(--radius-md);
+  }
+
+  .table-responsive-wrapper table {
+    min-width: 650px;
+  }
+
+  /* Interactive touch target size */
+  .btn, .form-input, .form-select, .fav-trigger-btn {
+    min-height: 46px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Small Mobile Devices (480px and below)
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 var(--space-md);
+  }
+
+  .brand-text {
+    font-size: 1.25rem;
+  }
+
+  .brand-badge {
+    display: none;
+  }
+
+  .hero-section {
+    padding: var(--space-2xl) 0 var(--space-3xl);
+  }
+
+  .hero-title {
+    font-size: 1.85rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-dialog {
+    margin: var(--space-xs);
+    max-height: 95vh;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+  }
+
+  .modal-footer .btn {
+    width: 100%;
+  }
+
+  .tabs-nav {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Print Stylesheet (For Booking Confirmation Voucher)
+   -------------------------------------------------------------------------- */
+@media print {
+  .site-header,
+  .demo-top-bar,
+  .site-footer,
+  .toast-container,
+  .modal-backdrop,
+  .drawer-backdrop,
+  .no-print,
+  .btn-print-hide {
+    display: none !important;
+  }
+
+  body {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .confirmation-voucher {
+    border: 2px solid #000000 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 24pt !important;
+  }
+
+  a {
+    text-decoration: none !important;
+    color: #000000 !important;
+  }
+}

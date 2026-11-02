@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore Stays — STAYSCAPE Luxury Hotel Booking</title>
+  <meta name="description" content="Discover and filter luxury hotels, heritage havelis, and alpine chalets across India with STAYSCAPE's interactive React-powered search engine.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Search Page Layout */
+    .search-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: var(--space-xl);
+      align-items: start;
+    }
+
+    .filters-sidebar {
+      background-color: var(--white);
+      border: 1px solid var(--sand);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 96px;
+    }
+
+    .filters-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: var(--space-sm);
+      border-bottom: 1px solid var(--sand-light);
+      margin-bottom: var(--space-md);
+    }
+
+    .filters-title {
+      font-size: 1.15rem;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filter-group {
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--sand-light);
+    }
+
+    .filter-group:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .filter-label {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--navy);
+      margin-bottom: var(--space-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .filter-checkbox-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 200px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .search-results-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-md);
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      background-color: var(--white);
+      padding: var(--space-md) var(--space-lg);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--sand);
+    }
+
+    .search-results-count {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .search-sort-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search-sort-label {
+      font-size: 0.88rem;
+      color: var(--charcoal);
+      font-weight: 500;
+    }
+
+    /* Top Filter Bar */
+    .search-top-bar {
+      background-color: var(--white);
+      border-bottom: 1px solid var(--sand);
+      padding: var(--space-md) 0;
+      margin-bottom: var(--space-xl);
+    }
+
+    .top-search-form {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr auto;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+
+    /* Loading placeholder skeleton */
+    .react-search-loading {
+      padding: var(--space-2xl) 0;
+      text-align: center;
+      color: var(--navy);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .loading-spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--sand);
+      border-top-color: var(--copper);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 1024px) {
+      .search-layout {
+        grid-template-columns: 1fr;
+      }
+      .filters-sidebar {
+        position: static;
+        margin-bottom: var(--space-xl);
+      }
+      .top-search-form {
+        grid-template-columns: 1fr 1fr;
+      }
+      .top-search-form .btn-search-col {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .top-search-form {
+        grid-template-columns: 1fr;
+      }
+      .top-search-form .btn-search-col {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dynamic Header Container -->
+  <div id="site-header-container"></div>
+
+  <!-- React 18 Application Root Mount Point -->
+  <div id="react-search-root">
+    <div class="react-search-loading">
+      <div class="loading-spinner"></div>
+      <p style="font-weight: 500;">Loading STAYSCAPE Discovery Engine...</p>
+    </div>
+  </div>
+
+  <!-- Dynamic Footer Container -->
+  <div id="site-footer-container"></div>
+
+  <!-- React 18 & Vendor Libraries -->
+  <script src="assets/vendor/react.production.min.js"></script>
+  <script src="assets/vendor/react-dom.production.min.js"></script>
+
+  <!-- Application Logic -->
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/search-react.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — STAYSCAPE Demo Booking</title>
+  <meta name="description" content="Complete your simulated hotel reservation on STAYSCAPE with inline validation and itemised price calculation.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Checkout Layout */
+    .checkout-layout {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: var(--space-2xl);
+      align-items: start;
+    }
+
+    .checkout-form-card {
+      background-color: var(--white);
+      border: 1px solid var(--sand);
+      border-radius: var(--radius-lg);
+      padding: var(--space-2xl);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .checkout-summary-card {
+      background-color: var(--white);
+      border: 1px solid var(--sand);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 96px;
+    }
+
+    .summary-hotel-header {
+      display: flex;
+      gap: var(--space-md);
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--sand-light);
+      margin-bottom: var(--space-md);
+    }
+
+    .summary-hotel-thumb {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+    }
+
+    .form-step-title {
+      font-size: 1.25rem;
+      margin-bottom: var(--space-md);
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .payment-option-card {
+      border: 1.5px solid var(--sand);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      margin-bottom: var(--space-sm);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      background-color: var(--ivory);
+    }
+
+    .payment-option-card:hover {
+      border-color: var(--copper);
+    }
+
+    .payment-option-card.selected {
+      border-color: var(--copper);
+      background-color: var(--white);
+      box-shadow: 0 0 0 1px var(--copper);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dynamic Header Container -->
+  <div id="site-header-container"></div>
+
+  <main class="main-content container" id="main-content">
+    
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+      <ul class="breadcrumb-list">
+        <li><a href="index.html">Home</a></li>
+        <li class="breadcrumb-separator">/</li>
+        <li><a href="search.html">Explore Stays</a></li>
+        <li class="breadcrumb-separator">/</li>
+        <li id="breadcrumb-hotel-link">Hotel Details</li>
+        <li class="breadcrumb-separator">/</li>
+        <li aria-current="page" style="color: var(--navy); font-weight: 600;">Checkout</li>
+      </ul>
+    </nav>
+
+    <div style="margin-bottom: var(--space-xl);">
+      <h1 style="font-size: 2.2rem; margin-bottom: 4px;">Confirm Your Demo Stay</h1>
+      <p style="color: var(--charcoal);">Review your reservation details and complete the simulated booking process.</p>
+    </div>
+
+    <!-- Main Container where checkout renders -->
+    <div id="checkout-content-container">
+      <!-- Populated via checkout.js -->
+    </div>
+
+  </main>
+
+  <!-- Dynamic Footer Container -->
+  <div id="site-footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/checkout.js"></script>
+</body>
+</html>

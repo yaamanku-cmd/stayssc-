@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STAYSCAPE — Luxury Hotel Booking Simulation | Find Your Stay</title>
+  <meta name="description" content="Experience STAYSCAPE, a luxury hotel booking simulation. Search curated boutique hotels, view live price calculations, and manage demo bookings in your browser.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Dynamic Header Container -->
+  <div id="site-header-container"></div>
+
+  <main class="main-content" id="main-content">
+    
+    <!-- Hero Section -->
+    <section class="hero-section" aria-labelledby="hero-title">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-pretitle">
+            <i data-lucide="sparkles" style="width: 15px; height: 15px;"></i>
+            <span>Curated Hospitality Simulation</span>
+          </div>
+          <h1 id="hero-title" class="hero-title">
+            Find your stay.<br><em>Make it memorable.</em>
+          </h1>
+          <p class="hero-subtitle">
+            Discover iconic oceanfront villas, royal havelis, and tranquil alpine chalets. Experience a realistic booking journey designed with modern web elegance.
+          </p>
+
+          <!-- Floating Search Card -->
+          <div class="hero-search-card">
+            <form id="hero-search-form" class="hero-search-form" action="search.html" method="GET">
+              
+              <!-- Destination -->
+              <div class="search-field-box">
+                <label for="search-destination" class="search-field-label">
+                  <i data-lucide="map-pin" style="width: 13px; height: 13px;"></i>
+                  <span>Destination</span>
+                </label>
+                <select id="search-destination" name="city" class="search-field-select">
+                  <option value="">All Destinations</option>
+                  <option value="Goa">Goa, India</option>
+                  <option value="Jaipur">Jaipur, Rajasthan</option>
+                  <option value="Manali">Manali, Himachal Pradesh</option>
+                  <option value="Mumbai">Mumbai, Maharashtra</option>
+                  <option value="Bengaluru">Bengaluru, Karnataka</option>
+                  <option value="Udaipur">Udaipur, Rajasthan</option>
+                  <option value="Noida">Noida, Uttar Pradesh</option>
+                  <option value="Delhi">Delhi, NCR</option>
+                </select>
+              </div>
+
+              <!-- Check-In -->
+              <div class="search-field-box">
+                <label for="search-checkin" class="search-field-label">
+                  <i data-lucide="calendar" style="width: 13px; height: 13px;"></i>
+                  <span>Check-In</span>
+                </label>
+                <input type="date" id="search-checkin" name="checkin" class="search-field-input" required>
+              </div>
+
+              <!-- Check-Out -->
+              <div class="search-field-box">
+                <label for="search-checkout" class="search-field-label">
+                  <i data-lucide="calendar-check" style="width: 13px; height: 13px;"></i>
+                  <span>Check-Out</span>
+                </label>
+                <input type="date" id="search-checkout" name="checkout" class="search-field-input" required>
+              </div>
+
+              <!-- Guests -->
+              <div class="search-field-box">
+                <label for="search-guests" class="search-field-label">
+                  <i data-lucide="users" style="width: 13px; height: 13px;"></i>
+                  <span>Guests</span>
+                </label>
+                <select id="search-guests" name="guests" class="search-field-select">
+                  <option value="1">1 Guest</option>
+                  <option value="2" selected>2 Guests</option>
+                  <option value="3">3 Guests</option>
+                  <option value="4">4 Guests</option>
+                </select>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="search-submit-col">
+                <button type="submit" class="btn btn-primary btn-search-hero" style="height: 100%; width: 100%;">
+                  <i data-lucide="search" style="width: 18px; height: 18px;"></i>
+                  <span>Search Stays</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Curated Destinations Section -->
+    <section class="container" style="padding-top: var(--space-4xl);" aria-labelledby="destinations-title" id="destinations">
+      <div class="section-header">
+        <span class="section-tagline">Destinations</span>
+        <h2 id="destinations-title">Eight Captivating Escapes</h2>
+        <p>From sun-bleached Arabian Sea dunes to snow-kissed Himalayan ridges, find your sanctuary across India’s most storied destinations.</p>
+      </div>
+
+      <div class="destinations-grid" id="destinations-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--space-lg);">
+        <!-- Populated via JavaScript from DESTINATIONS -->
+      </div>
+    </section>
+
+    <!-- Featured Stays Section -->
+    <section class="container" style="padding-top: var(--space-4xl);" aria-labelledby="featured-title">
+      <div class="section-header">
+        <span class="section-tagline">Curated Stays</span>
+        <h2 id="featured-title">Handpicked Luxury Sanctuaries</h2>
+        <p>Explore award-worthy properties celebrated for signature architecture, bespoke hospitality, and serene locations.</p>
+      </div>
+
+      <div class="hotels-grid" id="featured-hotels-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--space-xl);">
+        <!-- Populated via JavaScript with featured hotels -->
+      </div>
+
+      <div style="text-align: center; margin-top: var(--space-2xl);">
+        <a href="search.html" class="btn btn-navy btn-lg">
+          <span>Explore All 14 Stays</span>
+          <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+        </a>
+      </div>
+    </section>
+
+    <!-- Why STAYSCAPE Value Propositions -->
+    <section class="container" style="padding-top: var(--space-4xl);" aria-labelledby="why-title">
+      <div class="section-header">
+        <span class="section-tagline">The Difference</span>
+        <h2 id="why-title">Crafted for Discerning Travelers</h2>
+        <p>Built with precision, STAYSCAPE provides an authentic simulation of high-end travel booking without the clutter.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-box">
+          <div class="feature-icon-wrapper">
+            <i data-lucide="award" style="width: 28px; height: 28px;"></i>
+          </div>
+          <h3>Curated Luxury</h3>
+          <p>Handpicked fictional boutique properties, heritage havelis, and minimalist villas across eight Indian travel corridors.</p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon-wrapper">
+            <i data-lucide="receipt" style="width: 28px; height: 28px;"></i>
+          </div>
+          <h3>Transparent Demo Pricing</h3>
+          <p>Instantaneous client-side calculations showing nightly tariffs, stay durations, and itemised breakdown with zero hidden surprises.</p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon-wrapper">
+            <i data-lucide="compass" style="width: 28px; height: 28px;"></i>
+          </div>
+          <h3>Effortless Simulation</h3>
+          <p>Realistic reservation flow with instant confirmation vouchers, printable receipts, and intuitive cancellation management.</p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon-wrapper">
+            <i data-lucide="hard-drive" style="width: 28px; height: 28px;"></i>
+          </div>
+          <h3>Browser-Stored Wishlists</h3>
+          <p>Favorites and booking history are seamlessly retained in browser localStorage for convenient session revisit and evaluation.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Editorial Story Banner -->
+    <section class="container" style="padding-top: var(--space-4xl);">
+      <div class="editorial-banner">
+        <div>
+          <span style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--sand); font-weight: 600; display: block; margin-bottom: 8px;">
+            STAYSCAPE Editorial
+          </span>
+          <blockquote class="editorial-quote">
+            &ldquo;Travel is not merely about arriving at a place; it is the fine art of feeling completely at home in the extraordinary.&rdquo;
+          </blockquote>
+          <p style="color: var(--sand-light); font-size: 0.95rem; margin-bottom: var(--space-lg); max-width: 520px;">
+            Whether you desire the meditative calm of Lake Pichola or the fragrant cedar shadows of Solang Valley, every stay in our demonstration is envisioned as an unforgettable sanctuary.
+          </p>
+          <a href="search.html" class="btn btn-primary">
+            <span>Discover Your Sanctuary</span>
+            <i data-lucide="chevron-right" style="width: 18px; height: 18px;"></i>
+          </a>
+        </div>
+        <div class="editorial-img-box">
+          <img 
+            src="assets/images/vojtech-bruzek-Yrxr3bsPdS0-unsplash.jpg" 
+            alt="Interior of luxury hotel suite with warm lighting" 
+            loading="lazy"
+            onerror="this.src=FALLBACK_IMAGE"
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Concierge Callout Box -->
+    <section class="container" style="padding-top: var(--space-3xl);">
+      <div class="demo-alert-box" style="border-radius: var(--radius-md); padding: var(--space-lg); background-color: var(--sand-light); border: 1px solid var(--sand);">
+        <i data-lucide="sparkles" style="width: 24px; height: 24px; color: var(--copper); flex-shrink: 0; margin-top: 2px;"></i>
+        <div>
+          <strong style="color: var(--navy); font-size: 0.98rem; display: block; margin-bottom: 4px;">Curated Luxury Hospitality</strong>
+          <p style="color: var(--charcoal-dark); font-size: 0.88rem; line-height: 1.5;">
+            STAYSCAPE delivers handpicked boutique hotel and heritage retreat experiences across India with instant date calculations and seamless reservation management.
+            <a href="search.html" style="color: var(--copper); font-weight: 600; margin-left: 6px;">Explore All Stays &rarr;</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Dynamic Footer Container -->
+  <div id="site-footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Render Header and Footer
+      renderHeader('home');
+      renderFooter();
+
+      // 2. Initialize Hero Search Dates
+      const checkInInput = document.getElementById('search-checkin');
+      const checkOutInput = document.getElementById('search-checkout');
+      
+      const today = getTodayDateString();
+      const defaultCheckIn = getTodayDateString(2);
+      const defaultCheckOut = getTodayDateString(5);
+
+      checkInInput.min = today;
+      checkInInput.value = defaultCheckIn;
+
+      checkOutInput.min = getTodayDateString(1);
+      checkOutInput.value = defaultCheckOut;
+
+      checkInInput.addEventListener('change', () => {
+        if (checkInInput.value) {
+          const parts = checkInInput.value.split('-').map(Number);
+          const nextDay = new Date(parts[0], parts[1] - 1, parts[2] + 1);
+          const nextDayStr = `${nextDay.getFullYear()}-${String(nextDay.getMonth() + 1).padStart(2, '0')}-${String(nextDay.getDate()).padStart(2, '0')}`;
+          checkOutInput.min = nextDayStr;
+          if (checkOutInput.value <= checkInInput.value) {
+            checkOutInput.value = nextDayStr;
+          }
+        }
+      });
+
+      // 3. Render 8 Destination Cards
+      const destGrid = document.getElementById('destinations-grid');
+      if (destGrid && typeof DESTINATIONS !== 'undefined') {
+        destGrid.innerHTML = DESTINATIONS.map(dest => `
+          <a href="search.html?city=${encodeURIComponent(dest.name)}" class="destination-card" aria-label="Explore stays in ${escapeHTML(dest.name)}">
+            <img 
+              src="${escapeHTML(dest.image)}" 
+              alt="Scenic panorama of ${escapeHTML(dest.name)}" 
+              class="destination-card-img" 
+              loading="lazy"
+              onerror="this.src=FALLBACK_IMAGE"
+            >
+            <div class="destination-card-overlay">
+              <span class="destination-badge">${dest.stayCount} Luxury Stays</span>
+              <h3 class="destination-card-title">${escapeHTML(dest.name)}</h3>
+              <p class="destination-card-tagline">${escapeHTML(dest.tagline)}</p>
+            </div>
+          </a>
+        `).join('');
+      }
+
+      // 4. Render Featured Hotel Cards
+      const featuredGrid = document.getElementById('featured-hotels-grid');
+      if (featuredGrid) {
+        const hotels = getStoredHotels();
+        const featuredHotels = hotels.filter(h => h.featured).slice(0, 4);
+        featuredGrid.innerHTML = featuredHotels.map(h => renderHotelCard(h)).join('');
+      }
+
+      // 5. Initialize Lucide Icons
+      initIcons();
+    });
+  </script>
+</body>
+</html>

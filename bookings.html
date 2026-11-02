@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Bookings — STAYSCAPE</title>
+  <meta name="description" content="View, manage, and cancel your simulated hotel bookings stored locally in your browser with STAYSCAPE.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Bookings Page Layout */
+    .bookings-lookup-card {
+      background-color: var(--white);
+      border: 1px solid var(--sand);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: var(--space-2xl);
+    }
+
+    .booking-history-card {
+      background-color: var(--white);
+      border: 1px solid var(--sand);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: var(--space-lg);
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .booking-history-card:hover {
+      border-color: var(--sand-dark);
+      box-shadow: var(--shadow-md);
+    }
+
+    .booking-card-thumb-box {
+      position: relative;
+      background-color: var(--sand-light);
+    }
+
+    .booking-card-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .booking-card-content {
+      padding: var(--space-xl);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .booking-grid-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: var(--space-md);
+      margin: var(--space-md) 0;
+      padding: var(--space-md) 0;
+      border-top: 1px solid var(--sand-light);
+      border-bottom: 1px solid var(--sand-light);
+    }
+
+    @media (max-width: 768px) {
+      .booking-history-card {
+        grid-template-columns: 1fr;
+      }
+      .booking-card-thumb-box {
+        height: 180px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dynamic Header Container -->
+  <div id="site-header-container"></div>
+
+  <main class="main-content container" id="main-content" style="padding-top: var(--space-2xl);">
+    
+    <!-- Page Header -->
+    <div style="margin-bottom: var(--space-2xl);">
+      <h1 style="font-size: clamp(2rem, 3.5vw, 2.8rem); margin-bottom: 6px;">My Reservations</h1>
+      <p style="color: var(--charcoal); font-size: 1.05rem;">
+        Review and manage your simulated bookings stored locally in this browser.
+      </p>
+    </div>
+
+    <!-- Lookup by Email Card -->
+    <section class="bookings-lookup-card" aria-labelledby="lookup-title">
+      <h2 id="lookup-title" style="font-size: 1.25rem; margin-bottom: var(--space-xs); display: flex; align-items: center; gap: 8px;">
+        <i data-lucide="mail" style="width: 18px; height: 18px; color: var(--copper);"></i>
+        <span>Find Bookings by Guest Email</span>
+      </h2>
+      <p style="font-size: 0.88rem; color: var(--charcoal); margin-bottom: var(--space-md);">
+        Enter the email address you provided during reservation to filter your records. Since this is an offline demonstration, reservations live entirely within your browser's <code style="background: var(--sand-light); padding: 2px 6px; border-radius: 4px;">localStorage</code>.
+      </p>
+
+      <form id="email-filter-form" style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 240px;">
+          <input 
+            type="email" 
+            id="lookup-email-input" 
+            class="form-input" 
+            placeholder="e.g. arjun.sharma@example.com" 
+            aria-label="Guest email address"
+          >
+        </div>
+        <button type="submit" class="btn btn-navy btn-sm">
+          <i data-lucide="filter" style="width: 15px; height: 15px;"></i>
+          <span>Filter by Email</span>
+        </button>
+        <button type="button" class="btn btn-secondary btn-sm" id="show-all-bookings-btn">
+          <span>Show All Local Bookings</span>
+        </button>
+      </form>
+    </section>
+
+    <!-- Filter Tabs -->
+    <div class="tabs-nav" role="tablist" aria-label="Booking status categories">
+      <button type="button" class="tab-btn is-active" data-tab="all" role="tab" aria-selected="true">
+        All Bookings (<span id="count-all">0</span>)
+      </button>
+      <button type="button" class="tab-btn" data-tab="upcoming" role="tab" aria-selected="false">
+        Upcoming (<span id="count-upcoming">0</span>)
+      </button>
+      <button type="button" class="tab-btn" data-tab="past" role="tab" aria-selected="false">
+        Past Stays (<span id="count-past">0</span>)
+      </button>
+      <button type="button" class="tab-btn" data-tab="cancelled" role="tab" aria-selected="false">
+        Cancelled (<span id="count-cancelled">0</span>)
+      </button>
+    </div>
+
+    <!-- Active Filter Status Indicator -->
+    <div id="filter-indicator-bar" style="margin-bottom: var(--space-lg); display: none; align-items: center; justify-content: space-between; background-color: var(--sand-light); padding: 8px 14px; border-radius: var(--radius-sm); font-size: 0.85rem;">
+      <span>Showing bookings filtered for: <strong id="filter-active-email" style="color: var(--navy);"></strong></span>
+      <button type="button" id="clear-email-filter-link" style="color: var(--copper); font-weight: 600; text-decoration: underline;">Clear filter</button>
+    </div>
+
+    <!-- Bookings List Container -->
+    <section id="bookings-list-container" aria-label="Bookings List">
+      <!-- Populated via bookings.js -->
+    </section>
+
+    <!-- LocalStorage Notice Callout -->
+    <div class="demo-alert-box" style="margin-top: var(--space-3xl); border-radius: var(--radius-md);">
+      <i data-lucide="hard-drive" style="width: 22px; height: 22px; color: var(--copper); flex-shrink: 0;"></i>
+      <div style="font-size: 0.85rem; line-height: 1.5;">
+        <strong>Browser-Isolated Demo Storage:</strong>
+        All booking records are stored in this browser via HTML5 <code style="background: var(--sand); padding: 1px 4px; border-radius: 3px;">localStorage</code>. They are not stored on any remote server or database. If you clear browsing data or open STAYSCAPE in private/incognito mode, these demo records will not appear.
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Dynamic Footer Container -->
+  <div id="site-footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/bookings.js"></script>
+</body>
+</html>

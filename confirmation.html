@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Confirmed — STAYSCAPE</title>
+  <meta name="description" content="View and print your simulated hotel reservation confirmation voucher on STAYSCAPE.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Confirmation Voucher Layout */
+    .confirmation-voucher {
+      background-color: var(--white);
+      border: 1px solid var(--sand);
+      border-radius: var(--radius-lg);
+      padding: var(--space-3xl) var(--space-2xl);
+      box-shadow: var(--shadow-md);
+      max-width: 860px;
+      margin: 0 auto var(--space-2xl);
+    }
+
+    .confirmation-hero-badge {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background-color: var(--sage-light);
+      color: var(--sage-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-md);
+    }
+
+    .booking-ref-box {
+      background-color: var(--ivory);
+      border: 1px dashed var(--sand-dark);
+      border-radius: var(--radius-md);
+      padding: var(--space-md) var(--space-lg);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-md);
+      margin: var(--space-md) 0 var(--space-xl);
+    }
+
+    .booking-ref-code {
+      font-family: monospace;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--copper);
+      letter-spacing: 0.08em;
+    }
+
+    .voucher-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+      text-align: left;
+      padding: var(--space-xl) 0;
+      border-top: 1px solid var(--sand-light);
+      border-bottom: 1px solid var(--sand-light);
+      margin-bottom: var(--space-xl);
+    }
+
+    .voucher-item-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--charcoal);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .voucher-item-val {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .action-button-row {
+      display: flex;
+      gap: var(--space-md);
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: var(--space-xl);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dynamic Header Container -->
+  <div id="site-header-container"></div>
+
+  <main class="main-content container" id="main-content" style="padding-top: var(--space-2xl);">
+    
+    <!-- Voucher Container -->
+    <div id="confirmation-content-container">
+      <!-- Populated via confirmation.js -->
+    </div>
+
+  </main>
+
+  <!-- Dynamic Footer Container -->
+  <div id="site-footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/confirmation.js"></script>
+</body>
+</html>

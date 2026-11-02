@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotel Details — STAYSCAPE</title>
+  <meta name="description" content="View details, gallery photos, amenities, house rules, and live price calculations for your luxury stay on STAYSCAPE.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Hotel Details Layout */
+    .hotel-header-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--space-lg);
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+
+    .hotel-title-area h1 {
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      margin-bottom: 6px;
+    }
+
+    .hotel-submeta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+      color: var(--charcoal);
+      font-size: 0.95rem;
+    }
+
+    /* Gallery Section */
+    .gallery-container {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--space-sm);
+      height: 480px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: var(--space-2xl);
+      border: 1px solid var(--sand);
+    }
+
+    .gallery-main-view {
+      position: relative;
+      height: 100%;
+      background-color: var(--sand-light);
+    }
+
+    .gallery-main-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-thumbnails-col {
+      display: grid;
+      grid-template-rows: repeat(3, 1fr);
+      gap: var(--space-sm);
+      height: 100%;
+    }
+
+    .gallery-thumb-box {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      background-color: var(--sand-light);
+    }
+
+    .gallery-thumb-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+      opacity: 0.85;
+    }
+
+    .gallery-thumb-box:hover .gallery-thumb-img,
+    .gallery-thumb-box.active .gallery-thumb-img {
+      transform: scale(1.04);
+      opacity: 1;
+    }
+
+    .gallery-thumb-box.active {
+      outline: 3px solid var(--copper);
+      outline-offset: -3px;
+    }
+
+    /* Details Two-Column Grid */
+    .details-layout {
+      display: grid;
+      grid-template-columns: 1.7fr 1fr;
+      gap: var(--space-2xl);
+      align-items: start;
+    }
+
+    .details-section-card {
+      background-color: var(--white);
+      border: 1px solid var(--sand);
+      border-radius: var(--radius-md);
+      padding: var(--space-xl);
+      margin-bottom: var(--space-xl);
+    }
+
+    .details-section-card h2 {
+      font-size: 1.45rem;
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-sm);
+      border-bottom: 1px solid var(--sand-light);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .amenities-icons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: var(--space-md);
+    }
+
+    .amenity-icon-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.95rem;
+      color: var(--charcoal-dark);
+      padding: 8px;
+      border-radius: var(--radius-sm);
+      background-color: var(--ivory);
+    }
+
+    .amenity-icon-bullet {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: var(--sand-light);
+      color: var(--copper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* Sticky Booking Panel */
+    .details-booking-card-wrapper {
+      position: sticky;
+      top: 96px;
+    }
+
+    .booking-calculator-card {
+      background-color: var(--white);
+      border: 1px solid var(--sand);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .booking-card-price-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-sm);
+      border-bottom: 1px solid var(--sand-light);
+    }
+
+    .live-calc-breakdown {
+      background-color: var(--ivory);
+      border: 1px solid var(--sand);
+      border-radius: var(--radius-sm);
+      padding: var(--space-md);
+      margin: var(--space-md) 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.92rem;
+    }
+
+    .calc-row {
+      display: flex;
+      justify-content: space-between;
+      color: var(--charcoal-dark);
+    }
+
+    .calc-row.total-row {
+      border-top: 1px solid var(--sand);
+      padding-top: 8px;
+      font-weight: 700;
+      color: var(--navy);
+      font-size: 1.15rem;
+    }
+
+    @media (max-width: 900px) {
+      .gallery-container {
+        grid-template-columns: 1fr;
+        height: 340px;
+      }
+      .gallery-thumbnails-col {
+        display: none;
+      }
+      .details-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dynamic Header Container -->
+  <div id="site-header-container"></div>
+
+  <main class="main-content container" id="main-content">
+    
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+      <ul class="breadcrumb-list">
+        <li><a href="index.html">Home</a></li>
+        <li class="breadcrumb-separator">/</li>
+        <li><a href="search.html">Explore Stays</a></li>
+        <li class="breadcrumb-separator">/</li>
+        <li id="breadcrumb-hotel-name" aria-current="page" style="color: var(--navy); font-weight: 600;">Hotel Details</li>
+      </ul>
+    </nav>
+
+    <!-- Main Container where hotel details will render -->
+    <div id="hotel-details-container">
+      <!-- Populated via hotel.js -->
+    </div>
+
+  </main>
+
+  <!-- Dynamic Footer Container -->
+  <div id="site-footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/hotel.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Backend & Server Runtime (Not needed for S3 static website)
+backend/
+tests/
+server.js
+package.json
+package-lock.json
+BACKEND_API.md
+
+# Archives & Temporary files
+files.zip
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
